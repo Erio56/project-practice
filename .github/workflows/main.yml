@@ -19,15 +19,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: cd into folder
-        run: |
-          cd "task #1"
-          ls
-
+        
       - name: Run Lint
         run: |
           ls
           npm ci
           npx eslint .
           npx eslint --format html . > report.html
+        working-directory: ${{ github.workspace }}/task #1
