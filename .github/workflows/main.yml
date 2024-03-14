@@ -27,6 +27,7 @@ jobs:
 
       - name: Run Lint
         run: |
+          ls
           npm ci
           npx eslint .
           npx eslint --format html . > report.html
