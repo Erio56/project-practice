@@ -21,7 +21,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: cd into folder
-        run: cd task\ \#1
+        run: |
+          cd "task #1"
+          ls
 
       - name: Run Lint
         run: |
