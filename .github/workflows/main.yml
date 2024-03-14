@@ -17,9 +17,14 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - uses: actions/checkout@v4
-      - run: cd task\ \#1
-      - run: ls
-      - run: npm ci
-      - run: npx eslint .
-      - run: npx eslint --format html . > report.html
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: cd into folder
+        run: cd task\ \#1
+        run: ls
+
+      - name: Run Lint
+        run: npm ci
+        run: npx eslint .
+        run: npx eslint --format html . > report.html
