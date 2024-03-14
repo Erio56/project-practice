@@ -50,3 +50,5 @@ app.get('/api/secrets/:key', (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`running in port ${port}.`)
 })
+
+export default app
