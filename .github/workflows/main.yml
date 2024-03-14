@@ -22,9 +22,9 @@ jobs:
 
       - name: cd into folder
         run: cd task\ \#1
-        run: ls
 
       - name: Run Lint
-        run: npm ci
-        run: npx eslint .
-        run: npx eslint --format html . > report.html
+        run: |
+          npm ci
+          npx eslint .
+          npx eslint --format html . > report.html
