@@ -26,4 +26,4 @@ jobs:
           npm ci
           npx eslint .
           npx eslint --format html . > report.html
-        working-directory: ${{ github.workspace }}/"task #1"
+        working-directory: ${{ github.workspace }}/task_1
