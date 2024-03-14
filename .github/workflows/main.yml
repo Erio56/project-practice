@@ -24,6 +24,6 @@ jobs:
         run: |
           ls
           npm ci
-          npx eslint .
+          npx eslint ./index.ts
           npx eslint --format html . > report.html
         working-directory: ${{ github.workspace }}/task_1
