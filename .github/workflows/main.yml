@@ -1,0 +1,24 @@
+name: project-pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+  jobs:
+    codecheck:
+      runs-on: ubuntu-lastest
+
+      strategy:
+        matrix:
+          node-version: [20.x]
+
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+            with:
+              node-version: '14'
+        - run: npm ci
+        - run: npx eslint .
+        - run: npx eslint --format html . > report.html
