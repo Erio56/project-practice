@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: "cd 'task #1'"
+      - run: ls
       - run: npm ci
       - run: npx eslint .
       - run: npx eslint --format html . > report.html
