@@ -1,5 +1,7 @@
 name: project-pipeline
 
+
+
 on:
   push:
     branches: [main]
@@ -8,7 +10,7 @@ on:
 
 jobs:
   codecheck:
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
