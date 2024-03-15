@@ -1,9 +1,12 @@
 import request from 'supertest'
 import app from './index.ts'
+// import SecretController from './controller.ts'
 import { describe, test, expect } from '@jest/globals'
 
+// const controller =  new SecretController
+
 describe('POST /api/secrets', () => {
-  test('It should    with status 200', async () => {
+  test('It should with status 200', async () => {
     const response = await request(app).get('/api/secrets/efed2c89e88343e23202bde3f1538d6db8b2fc9f')
     expect(response.status).toBe(404)
     expect(response.body).toHaveProperty('message')
