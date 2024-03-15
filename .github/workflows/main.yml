@@ -42,7 +42,6 @@ jobs:
         run: |
           ls
           docker build -t erio56/express-practice:1.0 .
-          docker tag practice3:1.0.0 erio56/express-practice:1.0
           docker run -d erio56/express-practice:1.0
           docker login -u ${{ secrets.dockerUsername }} -p ${{ secrets.dockerPassword }}
           docker push erio56/express-practice:1.0
