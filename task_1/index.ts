@@ -15,7 +15,7 @@ interface SecretKey {
   secretKey: string
 }
 
-const secrets = new Map<string, string>() // repace with a map
+const secrets = new Map<string, string>()
 
 app.post('/api/secrets', (req: Request, res: Response) => {
   const secretMessage: SecretMessage = req.body

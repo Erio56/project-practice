@@ -1,22 +1,54 @@
 name: project-pipeline
 
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
-  jobs:
-    codecheck:
-      runs-on: ubuntu-lastest
+jobs:
+  codecheck:
+    runs-on: ubuntu-latest
 
-      strategy:
-        matrix:
-          node-version: [20.x]
+    strategy:
+      matrix:
+        node-version: [20.x]
 
-      steps:
-        - uses: actions/checkout@v4
-        - run: cd "task #1"
-        - run: npm ci
-        - run: npx eslint .
-        - run: npx eslint --format html . > report.html
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Run Lint
+        run: |
+          ls
+          npm ci
+          npx eslint index.ts
+        working-directory: ${{ github.workspace }}/task_1
+
+
+  create-docker:
+    runs-on: ubuntu-lastest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository 
+        uses: actions/checkout@v4
+
+      - name: build docker image
+        run: |
+          ls
+          docker build -t erio56/express-practice:1.0 .
+          docker tag practice3:1.0.0 erio56/express-practice:1.0
+          docker run -d erio56/express-practice:1.0
+          docker login -u ${{ secrets.dockerUsername }} -p ${{ secrets.dockerPassword }}
+          docker push erio56/express-practice:1.0
+          
+        working-directory: ${{ github.workspace }}/task_1
+
+
+
+
