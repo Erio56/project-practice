@@ -24,11 +24,25 @@ jobs:
           ls
           npm ci
           npx eslint index.ts
+
         working-directory: ${{ github.workspace }}/task_1
+        
+      - name: Generate coverage report
+        run: |
+            npx jest --coverage > coverage.txt
+        working-directory: ${{ github.workspace }}/task_1
+
+      - name: Uploading artifact
+        uses: actions/upload-artifact@v4
+        with: 
+          name: code-coverage-report
+          path: coverage.txt
+
+          working-directory: ${{ github.workspace }}/task_1
 
 
   create-docker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-lastest
 
     strategy:
       matrix:
@@ -42,12 +56,9 @@ jobs:
         run: |
           ls
           docker build -t erio56/express-practice:1.0 .
+          docker tag practice3:1.0.0 erio56/express-practice:1.0
           docker run -d erio56/express-practice:1.0
           docker login -u ${{ secrets.dockerUsername }} -p ${{ secrets.dockerPassword }}
           docker push erio56/express-practice:1.0
           
         working-directory: ${{ github.workspace }}/task_1
-
-
-
-
