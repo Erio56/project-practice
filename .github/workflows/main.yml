@@ -40,7 +40,7 @@ jobs:
 
       - name: Check coverage percent
         run: |
-          COVERAGE=$(awk '/^All files/ {print $3}' coverage.txt)
+          COVERAGE=$(awk '/All files/ {getline; print $3}' coverage.txt)
           if (( $(echo "$COVERAGE < 70" | bc -l) )); then
             echo "Coverage is below 70% ($COVERAGE%)"
             exit 1
