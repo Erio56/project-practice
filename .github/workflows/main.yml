@@ -37,6 +37,16 @@ jobs:
         with: 
           name: code-coverage-report
           path: task_1/coverage.txt
+
+      - name: Check coverage percent
+        run: |
+          COVERAGE=$(grep -oP '(?<=statements\s+)[\d.]+(?=%)' coverage/lcov.info)
+          if (( $(echo "$COVERAGE < 70" | bc -l) )); then
+            echo "Coverage is below 70% ($COVERAGE%)"
+            exit 1
+          else
+            echo "Coverage is above 70% ($COVERAGE%)"
+          fi
           
   create-docker:
     runs-on: ubuntu-latest
