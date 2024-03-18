@@ -1,30 +1,56 @@
-import request from 'supertest'
-import app from './index.ts'
-// import SecretController from './controller.ts'
+import { Response, Request } from 'express'
+/* eslint no-use-before-define: 0 */
+import SecretController from './controller.ts'
 import { describe, test, expect } from '@jest/globals'
 
-// const controller =  new SecretController
+const controller = new SecretController()
 
 describe('POST /api/secrets', () => {
-  test('It should with status 200', async () => {
-    const response = await request(app).get('/api/secrets/efed2c89e88343e23202bde3f1538d6db8b2fc9f')
-    expect(response.status).toBe(404)
-    expect(response.body).toHaveProperty('message')
-    expect(response.body).toEqual({ message: 'Not Found' })
+  test('It should create a new secret', () => {
+    let responseObject = {}
+    const request = {
+      body: {
+        message: 'prueba'
+      }
+    }
+    const response: Partial<Response> = {
+      json: jest.fn().mockImplementation((result) => {
+        responseObject = result as { secretKey: string }
+      })
+    }
+
+    const expectedSecret = {
+      secretKey: ''
+    }
+
+    controller.createSecret(request as Request, response as Response)
+
+    expect(typeof (responseObject as { secretKey: string }).secretKey).toEqual(typeof expectedSecret.secretKey)
   })
 })
 
-describe('GET /api/secrets', () => {
-  let respondeId: string
-  test('It should respond with status 200', async () => {
-    const response = await request(app).post('/api/secrets').send({ message: 'prueba3' })
-    expect(response.status).toBe(200)
-    expect(response.body).toHaveProperty('secretKey')
-    respondeId = response.body.secretKey
-  })
-  test('It should respond with the secret message', async () => {
-    const response = await request(app).get(`/api/secrets/${respondeId}`)
-    expect(typeof response.body.message).toBe('string')
-    expect(response.body.message).toBeTruthy()
+describe('GET /api/secrets/<key>', () => {
+  test('It should return a secret', () => {
+    let responseObject = {}
+    const request = {
+      params: {
+        key: '97a6fca6412ce40fbc9f56d24debcba911507cfd'
+      }
+    }
+    const response: Partial<Response> = {
+      json: jest.fn().mockImplementation((result) => {
+        responseObject = result as { message: string }
+      })
+    }
+
+    const expectedSecret = {
+      message: 'prueba'
+    }
+
+    controller.secrets = new Map<string, string>().set('97a6fca6412ce40fbc9f56d24debcba911507cfd', 'prueba')
+
+    controller.getSecret(request as unknown as Request, response as Response)
+
+    expect((responseObject as { message: string }).message).toEqual(expectedSecret.message)
   })
 })

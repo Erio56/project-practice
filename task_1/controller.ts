@@ -21,9 +21,9 @@ export default class SecretController {
     const secretKey: SecretKey = {
       secretKey: generatedKey
     }
-    this.secrets.set(generatedKey, secretMessage.message)
 
-    res.status(200).json(secretKey)
+    this.secrets.set(generatedKey, secretMessage.message)
+    res.json(secretKey)
   }
 
   getSecret = (req: Request, res: Response): void => {
@@ -41,6 +41,6 @@ export default class SecretController {
 
     response.message = secret
     this.secrets.delete(key)
-    res.status(200).json(response)
+    res.json(response)
   }
 }

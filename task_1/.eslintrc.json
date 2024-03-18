@@ -9,5 +9,13 @@
         "sourceType": "module"
     },
     "rules": {
-    }
+    },
+    "overrides": [
+        {
+        "files": ["test.test.ts"],
+        "env": {
+            "jest": true
+        }
+        }
+    ]
 }
